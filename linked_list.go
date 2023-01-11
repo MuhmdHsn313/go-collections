@@ -6,15 +6,9 @@ import (
 	"sync"
 )
 
-type LinkedListNode[T comparable] struct {
-	next *LinkedListNode[T]
-	prev *LinkedListNode[T]
-	Data T
-}
-
 type LinkedList[T comparable] struct {
-	head  *LinkedListNode[T]
-	tail  *LinkedListNode[T]
+	head  *Node[T]
+	tail  *Node[T]
 	size  int
 	mutex sync.RWMutex
 }
@@ -42,7 +36,7 @@ func (l *LinkedList[T]) AddFirst(data T) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 
-	node := &LinkedListNode[T]{
+	node := &Node[T]{
 		next: l.head,
 		prev: nil,
 		Data: data,
@@ -65,7 +59,7 @@ func (l *LinkedList[T]) AddLast(data T) {
 	l.mutex.Lock()
 	defer l.mutex.Unlock()
 
-	node := &LinkedListNode[T]{
+	node := &Node[T]{
 		next: nil,
 		prev: l.tail,
 		Data: data,
